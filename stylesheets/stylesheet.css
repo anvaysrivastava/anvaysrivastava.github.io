@@ -243,3 +243,39 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+.nav-tabs {
+  width: 100%;
+  background: #f4f4f4;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.nav-tabs ul {
+  list-style: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-tabs li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.nav-tabs a {
+  text-decoration: none;
+  color: #606c71;
+  padding: 5px 15px;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-tabs a:hover {
+  background-color: #dce6f0;
+}
+
+.nav-tabs a.active {
+  background-color: #159957;
+  color: white;
+}
