@@ -1,0 +1,145 @@
+/*
+ * anvay.xyz — one stylesheet for every page.
+ *
+ * Design choices:
+ * - System fonts only: no Google Fonts or other third-party requests, so the site itself
+ *   collects nothing, matching what the app policies promise.
+ * - Colours live in tokens on :root and are redefined for dark mode, so components never
+ *   hard-code a colour.
+ * - Each app page sets --app-accent (from its icon) to tint its header and links.
+ */
+
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1c1b19;
+  --muted: #6b6862;
+  --border: #e7e4dd;
+  --accent: #1f6f43;
+  --app-accent: var(--accent);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+  --radius: 20px;
+  --max: 960px;
+  --prose: 680px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121211;
+    --surface: #1c1c1a;
+    --text: #f2f0ea;
+    --muted: #a19d94;
+    --border: #2e2d2a;
+    --accent: #5fc58c;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.3);
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto,
+        "Noto Sans Devanagari", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--app-accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 0.5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.15rem; margin-top: 1.6em; }
+p { margin: 0 0 1em; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+/* Limits line length but keeps the left edge aligned with the header and hero. */
+.prose > * { max-width: var(--prose); }
+
+/* ---------- Site header ---------- */
+
+.site-header { border-bottom: 1px solid var(--border); background: var(--bg); }
+.site-header .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; min-height: 64px; flex-wrap: wrap;
+}
+.brand { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; }
+.site-nav { display: flex; gap: 4px 20px; flex-wrap: wrap; }
+.site-nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--text); }
+
+/* ---------- Home ---------- */
+
+.hero { padding: 72px 0 40px; }
+.hero p { font-size: 1.2rem; color: var(--muted); max-width: 560px; }
+
+.app-grid {
+  display: grid; gap: 20px; padding-bottom: 72px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.app-card {
+  display: flex; flex-direction: column; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow);
+  color: var(--text); text-decoration: none;
+  transition: transform 0.15s ease;
+}
+.app-card:hover { transform: translateY(-2px); }
+.app-card h2 { font-size: 1.25rem; margin: 0; }
+.app-card p { color: var(--muted); margin: 0; flex: 1; }
+.app-card .platform { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+
+.app-icon { width: 72px; height: 72px; border-radius: 22.5%; box-shadow: var(--shadow); }
+.app-icon.round { border-radius: 50%; } /* visionOS icons are circular */
+
+/* ---------- App page ---------- */
+
+.app-hero { padding: 56px 0 32px; border-bottom: 1px solid var(--border); }
+.app-hero .wrap { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+.app-hero .app-icon { width: 120px; height: 120px; }
+.app-hero h1 { margin-bottom: 0.2em; }
+.app-hero p { color: var(--muted); margin-bottom: 16px; }
+
+.badge { display: inline-block; }
+.badge img { height: 44px; width: auto; }
+.coming-soon {
+  display: inline-block; padding: 8px 16px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  font-size: 0.9rem; font-weight: 600; color: var(--muted);
+}
+
+.features { padding-top: 40px; padding-bottom: 8px; }
+.features ul { padding-left: 1.2em; }
+.features li { margin-bottom: 0.4em; }
+
+.features .toc { display: flex; gap: 8px 20px; flex-wrap: wrap; margin: 8px 0 0; padding: 0; list-style: none; }
+
+.legal { padding: 40px 0; border-top: 1px solid var(--border); }
+.legal .updated { color: var(--muted); font-size: 0.95rem; }
+
+/* ---------- Support ---------- */
+
+.faq details {
+  border: 1px solid var(--border); border-radius: 14px; background: var(--surface);
+  padding: 14px 18px; margin-bottom: 12px;
+}
+.faq summary { cursor: pointer; font-weight: 600; }
+.faq details p { margin: 10px 0 0; }
+
+/* ---------- Footer ---------- */
+
+.site-footer { border-top: 1px solid var(--border); padding: 32px 0 48px; color: var(--muted); font-size: 0.9rem; }
+.site-footer .wrap { display: flex; gap: 12px 24px; flex-wrap: wrap; justify-content: space-between; }
+.site-footer a { color: var(--muted); }
+
+main { min-height: 60vh; }
+.page { padding: 56px 0 72px; }
